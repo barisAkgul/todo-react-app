@@ -3,11 +3,12 @@ import { useEffect, useState, useRef } from "react";
 import ToDoListInput from "./TodoListInput";
 import TodoListTasks from "./ToDoListTasks";
 
-const INITIAL_STATE = { task: "", editable: false };
+// id: 0, task: "", editable: false
+const INITIAL_STATE = [];
 
 const ToDoList = () => {
   const [inputValue, setInputValue] = useState("");
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(INITIAL_STATE);
   const [taskIsUpdate, setTaskIsUpdate] = useState(false);
   const [count, setCount] = useState(0);
 
@@ -23,20 +24,31 @@ const ToDoList = () => {
   };
 
   const addTask = (e) => {
-    // e.preventDefault();
     if (inputValue) {
-      setTasks((prev) => [...prev, inputValue]);
+      setTasks((prev) => [
+        ...prev,
+        { id: Date.now(), task: inputValue, editable: false },
+      ]);
     }
-    clearTodoInput();
+    // clearTodoInput();
+    setInputValue("");
   };
 
   const deleteTask = (selectedIndex) => {
-    setTasks((prev) => prev.filter((task, index) => selectedIndex !== index));
+    setTasks((prev) => prev.filter((task) => selectedIndex !== task.id));
   };
 
   const editTask = (selectedIndex) => {
-    setTaskIsUpdate(!taskIsUpdate);
-    console.log(selectedIndex);
+    setTasks(
+      tasks.map((task) =>
+        task.id === selectedIndex
+          ? { ...task, editable: !task.editable }
+          : { ...task, editable: false }
+      )
+    );
+
+    const spanElement = document.getElementsByClassName("task-value");
+    console.log(spanElement[0].innerHTML);
   };
 
   useEffect(() => {
@@ -47,12 +59,16 @@ const ToDoList = () => {
     <>
       <div className="todo-container">
         <header className="todo-header">To Do List</header>
-        <ToDoListInput handleChange={handleChange} addTask={addTask} />
+        <ToDoListInput
+          inputValue={inputValue}
+          handleChange={handleChange}
+          addTask={addTask}
+          setInputValue={setInputValue}
+        />
         <TodoListTasks
           tasks={tasks}
           deleteTask={deleteTask}
           editTask={editTask}
-          taskIsUpdate={taskIsUpdate}
         />
       </div>
     </>
