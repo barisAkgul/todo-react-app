@@ -1,4 +1,9 @@
-const ToDoListInput = ({ handleChange, addTask }) => {
+const ToDoListInput = ({
+  handleChange,
+  addTask,
+  inputValue,
+  setInputValue,
+}) => {
   return (
     <>
       <div className="todo-list-input-section">
@@ -6,7 +11,8 @@ const ToDoListInput = ({ handleChange, addTask }) => {
           type="text"
           placeholder="Create To Do"
           className="todo-input"
-          onChange={handleChange}
+          value={inputValue}
+          onChange={(e) => handleChange(e, setInputValue)}
         />
         <button className="add-button" onClick={addTask}>
           Add

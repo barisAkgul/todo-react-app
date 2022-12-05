@@ -8,12 +8,11 @@ const INITIAL_STATE = [];
 
 const ToDoList = () => {
   const [inputValue, setInputValue] = useState("");
+  const [editValue, setEditValue] = useState("");
   const [tasks, setTasks] = useState(INITIAL_STATE);
-  const [taskIsUpdate, setTaskIsUpdate] = useState(false);
-  const [count, setCount] = useState(0);
 
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
+  const handleChange = (e, setStateFunction) => {
+    setStateFunction(e.target.value);
   };
 
   const clearTodoInput = () => {
@@ -38,8 +37,8 @@ const ToDoList = () => {
     setTasks((prev) => prev.filter((task) => selectedIndex !== task.id));
   };
 
-  const editTask = (selectedIndex) => {
-    setTasks(
+  const editTask = (selectedIndex, setStateFunction) => {
+    setStateFunction(
       tasks.map((task) =>
         task.id === selectedIndex
           ? { ...task, editable: !task.editable }
@@ -47,13 +46,16 @@ const ToDoList = () => {
       )
     );
 
-    const spanElement = document.getElementsByClassName("task-value");
-    console.log(spanElement[0].innerHTML);
+    // const spanElement = document.getElementsByClassName("task-value");
+    // console.log(spanElement[0].innerHTML);
   };
 
   useEffect(() => {
     console.log(tasks);
   }, [tasks]);
+  useEffect(() => {
+    console.log("editValue : " + editValue);
+  }, [editValue]);
 
   return (
     <>
@@ -69,6 +71,9 @@ const ToDoList = () => {
           tasks={tasks}
           deleteTask={deleteTask}
           editTask={editTask}
+          setTasks={setTasks}
+          setEditValue={setEditValue}
+          handleChange={handleChange}
         />
       </div>
     </>
