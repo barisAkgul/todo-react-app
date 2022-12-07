@@ -34,8 +34,10 @@ const ToDoList = () => {
     setInputValue("");
   };
 
-  const deleteTask = (selectedIndex) => {
-    setTasks((prev) => prev.filter((task) => selectedIndex !== task.id));
+  const deleteTask = (selectedIndex, setStateFunction) => {
+    setStateFunction((prev) =>
+      prev.filter((task) => selectedIndex !== task.id)
+    );
   };
 
   const editTask = (selectedIndex, setStateFunction) => {

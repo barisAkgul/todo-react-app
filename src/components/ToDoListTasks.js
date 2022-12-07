@@ -1,5 +1,7 @@
 import { type } from "@testing-library/user-event/dist/type";
 
+import { handleChange } from "./Action";
+
 // Icons
 import { MdEdit } from "react-icons/md";
 import { TiDeleteOutline } from "react-icons/ti";
@@ -37,7 +39,7 @@ const TodoListTasks = ({
               <div className="icon-section">
                 <div
                   className="delete-button"
-                  onClick={() => deleteTask(task.id)}
+                  onClick={() => deleteTask(task.id, setTasks)}
                 >
                   <TiDeleteOutline />
                 </div>
