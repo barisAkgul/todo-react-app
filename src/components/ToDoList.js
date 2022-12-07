@@ -8,28 +8,29 @@ const INITIAL_STATE = [];
 
 const ToDoList = () => {
   const [inputValue, setInputValue] = useState("");
-  const [editValue, setEditValue] = useState("");
   const [tasks, setTasks] = useState(INITIAL_STATE);
 
   const handleChange = (e, setStateFunction) => {
     setStateFunction(e.target.value);
   };
 
-  const clearTodoInput = () => {
-    const inputElement = document.querySelectorAll("input");
-    inputElement[0].value = "";
-
-    setInputValue("");
+  const handleChangeEditValue = (e, selectedIndex, setStateFunction) => {
+    setStateFunction(
+      tasks.map((task) =>
+        task.id === selectedIndex
+          ? { ...task, task: e.target.value }
+          : { ...task, task: task.task }
+      )
+    );
   };
 
   const addTask = (e) => {
     if (inputValue) {
       setTasks((prev) => [
         ...prev,
-        { id: Date.now(), task: inputValue, editable: false },
+        { id: Date.now(), task: inputValue, editable: false, complete: false },
       ]);
     }
-    // clearTodoInput();
     setInputValue("");
   };
 
@@ -45,17 +46,17 @@ const ToDoList = () => {
           : { ...task, editable: false }
       )
     );
-
-    // const spanElement = document.getElementsByClassName("task-value");
-    // console.log(spanElement[0].innerHTML);
   };
 
-  useEffect(() => {
-    console.log(tasks);
-  }, [tasks]);
-  useEffect(() => {
-    console.log("editValue : " + editValue);
-  }, [editValue]);
+  const doneTask = (selectedIndex, setStateFunction) => {
+    setStateFunction(
+      tasks.map((task) =>
+        task.id === selectedIndex
+          ? { ...task, complete: !task.complete }
+          : { ...task, complete: task.complete }
+      )
+    );
+  };
 
   return (
     <>
@@ -72,8 +73,8 @@ const ToDoList = () => {
           deleteTask={deleteTask}
           editTask={editTask}
           setTasks={setTasks}
-          setEditValue={setEditValue}
-          handleChange={handleChange}
+          doneTask={doneTask}
+          handleChangeEditValue={handleChangeEditValue}
         />
       </div>
     </>

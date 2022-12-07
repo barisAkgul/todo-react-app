@@ -1,13 +1,17 @@
+import { type } from "@testing-library/user-event/dist/type";
+
+// Icons
 import { MdEdit } from "react-icons/md";
 import { TiDeleteOutline } from "react-icons/ti";
+import { MdDone } from "react-icons/md";
 
 const TodoListTasks = ({
   tasks,
   deleteTask,
   editTask,
   setTasks,
-  handleChange,
-  setEditValue,
+  handleChangeEditValue,
+  doneTask,
 }) => {
   return (
     <>
@@ -18,14 +22,17 @@ const TodoListTasks = ({
           <div className="todo-list-tasks" key={index}>
             <div className="todo-list-task-element">
               <div className="task">
-                <span
+                <input
+                  type="text"
+                  value={task.task}
                   className="task-value"
-                  // onChange={(e) => handleChange(e, setEditValue)}
-                  contentEditable={task.editable}
-                  suppressContentEditableWarning={task.editable}
-                >
-                  {task.task}
-                </span>
+                  onChange={(e) => handleChangeEditValue(e, task.id, setTasks)}
+                  disabled={!task.editable}
+                  style={{
+                    textDecoration:
+                      !task.editable && task.complete ? "line-through" : "none",
+                  }}
+                />
               </div>
               <div className="icon-section">
                 <div
@@ -40,6 +47,12 @@ const TodoListTasks = ({
                 >
                   <MdEdit />
                 </div>
+                <div
+                  className="done-button"
+                  onClick={() => doneTask(task.id, setTasks)}
+                >
+                  <MdDone />
+                </div>
               </div>
             </div>
           </div>
@@ -49,17 +62,3 @@ const TodoListTasks = ({
 };
 
 export default TodoListTasks;
-
-// {
-//   <div className="todo-list-task-element">
-//     <div className="task">asdasdasfdsfdsf</div>
-//     <div className="icon-section">
-//       <div className="delete-button">
-//         <TiDeleteOutline />
-//       </div>
-//       <div className="edit-button">
-//         <MdEdit />
-//       </div>
-//     </div>
-//   </div>;
-// }
