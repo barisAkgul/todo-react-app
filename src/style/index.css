@@ -11,20 +11,16 @@ body {
   height: 100vh;
 }
 
-.todo-container {
-  margin-top: 70px;
-  width: 450px;
-}
-
 .todo-header {
   font-size: 30px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .todo-list-input-section {
   display: flex;
   flex-direction: column;
+  width: 40vw;
 }
 
 .todo-input {
@@ -125,20 +121,17 @@ body {
 
 .icon-section {
   display: flex;
-  /* flex-direction: column;
-  justify-content: space-between;
-  align-items: center; */
-  /* margin: 20px 10px 20px 10px; */
 }
 
 .delete-button,
 .edit-button,
 .done-button {
   font-size: 20px;
+  cursor: pointer;
 }
 
 .delete-button {
-  color: rgb(209, 35, 35);
+  color: rgb(202, 30, 30);
 }
 
 .edit-button {
@@ -177,4 +170,74 @@ body {
 .task-value:focus {
   outline: none;
   border-color: rgb(51, 154, 240);
+}
+
+.todo-container {
+  margin-top: 70px;
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.task-container {
+  width: 100%;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 25px;
+}
+
+.task-status {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.uncompleted,
+.completed,
+.drop {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 33%;
+}
+
+.input-and-select {
+  display: flex;
+}
+
+.todo-select {
+  margin-bottom: 10px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid rgb(206, 212, 218);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  height: 36px;
+  -webkit-tap-highlight-color: transparent;
+  line-height: 34px;
+  resize: none;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+  display: block;
+  text-align: left;
+  min-height: 36px;
+  border-radius: 8px;
+  margin-left: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .task-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .todo-list-input-section {
+    width: 100%;
+  }
 }
